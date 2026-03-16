@@ -1,0 +1,5 @@
+{
+  "name": "manga-editorial-meeting",
+  "description": "漫画企画メモからAI編集会議を自動実行し、4軸スコア評価・改善提案・掲載判断を出力する",
+  "version": "0.1.0"
+}

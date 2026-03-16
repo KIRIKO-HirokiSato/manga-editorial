@@ -1,0 +1,7 @@
+{
+  "name": "manga-editorial",
+  "description": "漫画の企画メモを渡すだけで、AI編集者たちが自動で会議を開いて掲載判断まで出してくれる skill",
+  "plugins": [
+    "manga-editorial-meeting"
+  ]
+}

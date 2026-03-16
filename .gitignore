@@ -1,0 +1,13 @@
+# OS
+.DS_Store
+
+# direnv
+.envrc
+
+# Editor
+*.swp
+*.swo
+*~
+
+# Claude Code
+.claude/
