@@ -11,3 +11,8 @@
 
 # Claude Code
 .claude/
+
+# NFD runtime data (keep directory structure via .gitkeep)
+plugins/manga-editorial-meeting/nfd/memory/**/*.md
+plugins/manga-editorial-meeting/nfd/patterns/**/*.md
+plugins/manga-editorial-meeting/nfd/crystals/**/*.md

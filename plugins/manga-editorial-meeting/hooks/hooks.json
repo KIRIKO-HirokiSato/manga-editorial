@@ -1,0 +1,16 @@
+{
+  "description": "漫画編集会議の品質ゲート。レポート出力時に必須項目の存在と内容品質をチェックする。",
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "${CLAUDE_PLUGIN_ROOT}/hooks/quality-gate.sh",
+            "timeout": 15000
+          }
+        ]
+      }
+    ]
+  }
+}
