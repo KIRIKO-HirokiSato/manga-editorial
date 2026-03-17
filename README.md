@@ -20,6 +20,16 @@
 | 制作スターターキット | 企画メモ・レポート・キャラ設定・画像生成プロンプトを一括出力 |
 | デモモード | 引数なし or `demo` で企画メモを自動生成して体験可能 |
 
+## 必要環境
+
+- Claude Code v2.1 以上
+- `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1` 環境変数
+- `--dangerously-skip-permissions` フラグ（動的コンテキスト注入に必要）
+
+```bash
+CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1 claude --dangerously-skip-permissions --plugin-dir ./plugins/manga-editorial-meeting
+```
+
 ## インストール
 
 ```bash
@@ -184,16 +194,6 @@ flowchart LR
 
 > **初動フックと継続フックの独立評価**: タイトルのキャッチーさは初回購買力として機能するが、毎話継続フックとは独立した評価軸。タイトルフック高/継続フック低の企画は1話切りリスクが高い。
 > ——4ロール独立合意で定着
-
-## 必要環境
-
-- Claude Code v2.1 以上
-- `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1` 環境変数
-- `--dangerously-skip-permissions` フラグ（動的コンテキスト注入に必要）
-
-```bash
-CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1 claude --dangerously-skip-permissions --plugin-dir ./plugins/manga-editorial-meeting
-```
 
 ## 評価軸の詳細
 
