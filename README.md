@@ -23,7 +23,7 @@
 
 ```bash
 # Claude Code 内で実行
-/plugin marketplace add <your-github-user>/manga
+/plugin marketplace add KIRIKO-HirokiSato/manga-editorial
 /plugin install manga-editorial-meeting@manga-editorial
 ```
 
@@ -179,7 +179,7 @@ CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1 claude --dangerously-skip-permissions --p
 ## Repository Structure
 
 ```
-manga/
+manga-editorial/
 ├── .claude-plugin/
 │   └── marketplace.json
 ├── plugins/manga-editorial-meeting/
