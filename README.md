@@ -12,9 +12,11 @@
 | 4軸スコア評価 | 主人公エンジン・対立構造・読者フック・連載エンジンを各10点で採点 |
 | 編集者間の議論 | 3人の専門編集者が SendMessage で直接やりとり。反論・補足が飛び交う臨場感 |
 | 掲載判断 | スコアに基づく自動判定（掲載 / 条件付き通過 / 保留 / 却下） |
+| 自動ブラッシュアップ | 掲載基準未達なら企画を自動改稿して再会議（最大3ラウンド） |
 | 改善提案 | 優先度付きの具体的アクションリスト |
 | 市場調査 | Web検索による類似作品・トレンド分析 |
 | 成長するAI | NFD 三層メモリ（memory → patterns → crystals）で会議ごとに学習 |
+| 制作スターターキット | 企画メモ・レポート・キャラ設定・画像生成プロンプトを一括出力 |
 | デモモード | 引数なし or `demo` で企画メモを自動生成して体験可能 |
 
 ## インストール
@@ -63,41 +65,79 @@
   3. [低] サブキャラクターの動機を深堀り
 ```
 
+## 成果物: 漫画制作スターターキット
+
+会議が完了すると、漫画制作に必要なファイル一式が `output/` に自動生成されます。
+
+```
+output/2026-03-17_深海カフェ/
+├── proposal.md                最終版企画メモ（改稿済み）
+├── report.md                  編集会議レポート全文
+├── score-history.csv          ラウンド別スコア推移データ
+├── characters/
+│   ├── 深町珊.md              主人公の詳細設定シート
+│   ├── 安岐晴彦.md            対立キャラの詳細設定シート
+│   └── ...
+└── prompts/
+    └── character-visuals.md   画像生成AI用プロンプト集
+```
+
+| ファイル | 用途 |
+|----------|------|
+| `proposal.md` | 編集部持ち込み・次工程への入力 |
+| `report.md` | 会議記録の保存・振り返り |
+| `score-history.csv` | スコア推移のグラフ化・外部ツール連携 |
+| `characters/*.md` | キャラデザ発注・脚本作成の参考資料 |
+| `prompts/character-visuals.md` | NanoBanana2 等の画像生成AIでキャラビジュアルを生成 |
+
 ## 動作の流れ
 
 ```mermaid
 sequenceDiagram
     participant U as ユーザー
     participant TL as Editorial Lead<br>(統括進行)
+    participant BW as Brush-up Writer<br>(改稿ライター)
     participant CH as Character Editor<br>(キャラ担当)
     participant ST as Story Editor<br>(構成担当)
     participant MA as Market Analyst<br>(市場分析)
 
     U->>TL: 企画メモを渡す
     Note over TL: Phase 0: 企画メモを構造化
-    Note over TL: TeamCreate + 3人を spawn
 
-    par Phase 1: 独立評価
-        CH-->>TL: 主人公エンジン評価
-        ST-->>TL: 対立構造 + 読者フック評価
-        MA-->>TL: 連載エンジン評価 + Web検索結果
+    rect rgb(240, 248, 255)
+        Note over TL,MA: Round 1: 編集会議
+        Note over TL: TeamCreate + 3人を spawn
+
+        par Phase 1: 独立評価
+            CH-->>TL: 主人公エンジン評価
+            ST-->>TL: 対立構造 + 読者フック評価
+            MA-->>TL: 連載エンジン評価 + Web検索結果
+        end
+
+        TL->>CH: 全員の評価を共有
+        TL->>ST: 全員の評価を共有
+        TL->>MA: 全員の評価を共有
+
+        Note over CH,MA: Phase 3: 編集者同士の議論
+        CH->>ST: キャラの弱点は構成の問題では？
+        ST->>CH: 構成が先、キャラは後から直せる
+        MA->>CH: 市場的にはキャラ重視が正解
+
+        CH-->>TL: 最終見解
+        ST-->>TL: 最終見解
+        MA-->>TL: 最終見解
+
+        Note over TL: Phase 5: 統合・掲載判断
     end
 
-    TL->>CH: 全員の評価を共有
-    TL->>ST: 全員の評価を共有
-    TL->>MA: 全員の評価を共有
+    alt 掲載基準未達（Stop Hook が検知）
+        Note over TL,BW: 自動ブラッシュアップ
+        TL->>BW: レポート + 改善アクション
+        BW-->>TL: 改稿版企画メモ
+        Note over TL,MA: Round 2: 再会議（最大3ラウンド）
+    end
 
-    Note over CH,MA: Phase 3: 編集者同士の議論
-    CH->>ST: キャラの弱点は構成の問題では？
-    ST->>CH: 構成が先、キャラは後から直せる
-    MA->>CH: 市場的にはキャラ重視が正解
-
-    CH-->>TL: 最終見解
-    ST-->>TL: 最終見解
-    MA-->>TL: 最終見解
-
-    Note over TL: Phase 5: 統合・掲載判断
-    TL->>U: 編集会議レポート出力
+    TL->>U: 最終レポート出力
 ```
 
 ## NFD: 使うほど賢くなる
@@ -149,6 +189,8 @@ manga/
 │   │   ├── character-editor.md      # キャラ担当（Sonnet）
 │   │   ├── story-editor.md          # 構成担当（Sonnet）
 │   │   ├── market-analyst.md        # 市場分析（Sonnet）
+│   │   ├── brush-up-writer.md       # 企画改稿ライター（Sonnet）
+│   │   ├── output-bundler.md        # 成果物パッケージャー（Sonnet）
 │   │   └── crystallizer.md          # NFD 結晶化（Sonnet）
 │   ├── hooks/
 │   │   ├── hooks.json               # Stop Hook 定義
@@ -160,6 +202,8 @@ manga/
 │   │       └── report-template.md   # レポートテンプレート
 │   ├── scripts/
 │   │   └── check-crystallization.sh # NFD 結晶化トリガー
+│   ├── output/                      # 成果物バンドル（実行時に生成）
+│   │   └── {日付}_{タイトル}/       # 企画ごとのスターターキット
 │   └── nfd/                         # 三層メモリ（実行時に蓄積）
 │       ├── memory/                  # 生の経験記録
 │       ├── patterns/                # 抽出パターン
@@ -170,10 +214,12 @@ manga/
 
 ## 技術的な特徴
 
-- **AgentTeams**: 5つのエージェントが SendMessage で直接対話。議論の臨場感を再現
+- **AgentTeams**: 6つのエージェントが SendMessage で直接対話。議論の臨場感を再現
+- **Stop Hook ブラッシュアップループ**: 掲載基準未達を検知 → 自動改稿 → 再会議を最大3ラウンド
 - **Stop Hook 品質ゲート**: レポート出力時に4軸スコア・掲載判断・改善提案の存在を自動検証
 - **動的コンテキスト注入**: `!` コマンドで NFD メモリ状況をスキル起動時に自動チェック
 - **NFD 三層アーキテクチャ**: ロール別メモリ + 共通メモリ + 自動結晶化でプラグインが成長
+- **制作スターターキット**: 企画メモ・レポート・キャラ設定シート・画像生成プロンプトを一括出力
 
 ## License
 

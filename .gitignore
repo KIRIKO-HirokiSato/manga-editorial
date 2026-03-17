@@ -16,3 +16,6 @@
 plugins/manga-editorial-meeting/nfd/memory/**/*.md
 plugins/manga-editorial-meeting/nfd/patterns/**/*.md
 plugins/manga-editorial-meeting/nfd/crystals/**/*.md
+
+# Output bundles (generated at runtime, keep .gitkeep only)
+plugins/manga-editorial-meeting/output/*/

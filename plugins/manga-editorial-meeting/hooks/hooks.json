@@ -1,5 +1,5 @@
 {
-  "description": "漫画編集会議の品質ゲート。レポート出力時に必須項目の存在と内容品質をチェックする。",
+  "description": "漫画編集会議の Hooks。品質ゲート（+ ブラッシュアップループ）と NFD チェックポイントを独立して実行。Stop / SubagentStop 両対応。",
   "hooks": {
     "Stop": [
       {
@@ -7,6 +7,35 @@
           {
             "type": "command",
             "command": "${CLAUDE_PLUGIN_ROOT}/hooks/quality-gate.sh",
+            "timeout": 15000
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "${CLAUDE_PLUGIN_ROOT}/hooks/nfd-checkpoint.sh",
+            "timeout": 15000
+          }
+        ]
+      }
+    ],
+    "SubagentStop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "${CLAUDE_PLUGIN_ROOT}/hooks/quality-gate.sh",
+            "timeout": 15000
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "${CLAUDE_PLUGIN_ROOT}/hooks/nfd-checkpoint.sh",
             "timeout": 15000
           }
         ]
