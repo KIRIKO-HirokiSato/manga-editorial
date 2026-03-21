@@ -1,5 +1,5 @@
 {
   "name": "manga-editorial-meeting",
-  "description": "漫画企画メモからAI編集者チームが自動で編集会議を開催。AgentTeams による議論・4軸スコア評価・改善提案・掲載判断を出力する",
+  "description": "漫画企画メモからAI編集者チームが自動で編集会議を開催。AgentTeams による議論・4軸スコア評価・掲載判断・（保留・却下時）編集長の問いを出力する",
   "version": "0.2.0"
 }
