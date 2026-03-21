@@ -30,6 +30,11 @@
 CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1 claude --dangerously-skip-permissions --plugin-dir ./plugins/manga-editorial-meeting
 ```
 
+## デモ動画
+
+<!-- TODO: 提出前にデモ動画を撮影してリンクを差し替える（3分以内） -->
+[デモ動画を見る](https://example.com/demo)
+
 ## インストール
 
 ```bash
