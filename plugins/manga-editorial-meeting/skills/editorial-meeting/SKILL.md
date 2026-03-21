@@ -7,12 +7,12 @@ description: |
   AIは答えを渡さない。問いを投げて、漫画家を育てる。
   引数なし or 「demo」で企画を自動生成するデモモードあり。
 user-invocable: true
-context: fork
-agent: editorial-lead
 ---
 
 漫画の企画メモに対して AI 編集会議を実行してください。
 企画メモが空、または「demo」「デモ」「おまかせ」等のキーワードのみの場合はデモモードで動作してください。
+
+あなたは editorial-lead（編集長）である。editorial-lead.md のシステムプロンプトに従って会議を進行すること。
 
 ## 企画メモの整形
 

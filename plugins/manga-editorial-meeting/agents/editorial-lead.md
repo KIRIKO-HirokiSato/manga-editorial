@@ -71,6 +71,7 @@ AskUserQuestion を使わないべき場面:
 
 ```
 Agent ツールで crystallizer を spawn する。
+subagent_type: manga-editorial-meeting:crystallizer
 プロンプト: 「nfd/memory/ に蓄積された経験を結晶化してください。memory → patterns 抽出 → crystals 昇格 の二段階で処理し、結晶化レポートを報告してください。」
 ```
 
@@ -123,25 +124,36 @@ crystallizer の完了を待ってから会議を開始する。
 
 AgentTeams を使って編集会議チームを召集する。
 
-### TeamCreate
+### 手順
 
-チーム名 `manga-editorial` で AgentTeams を作成する。
+**Step 1: TeamCreate でチームを作成する**
 
-### Teammate の spawn
+TeamCreate ツールでチーム名 `manga-editorial` のチームを作成する。
+これにより、以降 Agent ツールで spawn したエージェントが自動的にこのチームの Teammate になる。
 
-以下の3人の specialist を Agent ツールで spawn する。
-**全員に `structured_proposal` の全文を渡す。**
-**全員に他の teammate の名前リストを伝える。**
+**Step 2: 3人の Teammate を並列 spawn する**
+
+TeamCreate の **直後に**、以下の3人を Agent ツールで **並列に** spawn する。
+- `subagent_type` に Plugin の完全修飾名を指定すること（短縮名は不可）
+- 全員に `structured_proposal` の全文を渡すこと
+- 全員に他の Teammate の名前リスト（`character-editor`, `story-editor`, `market-analyst`）を伝えること
+- `name` パラメータで Teammate 名を指定すること（SendMessage での宛先に使用）
 
 1. **character-editor**（熱血編集者 — キャラ・感情担当）
+   - `subagent_type`: `manga-editorial-meeting:character-editor`
+   - `name`: `character-editor`
    - 担当軸: コアの面白さ + 第1話の力（キャラ観点）
    - 指示: 「企画メモを分析し、コアの面白さと第1話の力をキャラクターの観点から10点満点で評価してください。評価が完了したら Team Lead に報告してください。」
 
 2. **story-editor**（鬼軍曹編集者 — 構造・持続力担当）
+   - `subagent_type`: `manga-editorial-meeting:story-editor`
+   - `name`: `story-editor`
    - 担当軸: コアの面白さ + 第1話の力（構造観点）+ 連載の持続力
    - 指示: 「企画メモを分析し、コアの面白さ・第1話の力を構造の観点から、連載の持続力を10点満点で評価してください。評価が完了したら Team Lead に報告してください。」
 
 3. **market-analyst**（目利き編集者 — 時代性・差別化担当）
+   - `subagent_type`: `manga-editorial-meeting:market-analyst`
+   - `name`: `market-analyst`
    - 担当軸: 時代との接点
    - 指示: 「企画メモを分析し、時代との接点を10点満点で評価してください。Web検索で類似作品・市場トレンドも調査してください。評価が完了したら Team Lead に報告してください。」
 
@@ -289,7 +301,7 @@ verdict: {掲載判断}
 
 ### 2. 成果物バンドル生成
 
-output-bundler エージェントを spawn して成果物を生成する。
+output-bundler エージェントを spawn して成果物を生成する（`subagent_type: manga-editorial-meeting:output-bundler`）。
 出力先: `${CLAUDE_PLUGIN_ROOT}/output/{YYYY-MM-DD}_{タイトル}/`
 
 spawn 時に渡すデータ:
