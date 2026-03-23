@@ -28,14 +28,19 @@
 - `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1` 環境変数
 - `--dangerously-skip-permissions` フラグ（動的コンテキスト注入に必要）
 
+Wndows PS
+```shell
+$env:CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1; claude --dangerously-skip-permissions --plugin-dir ./plugins/manga-editorial-meeting
+```
+
+MacOS
 ```bash
 CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1 claude --dangerously-skip-permissions --plugin-dir ./plugins/manga-editorial-meeting
 ```
 
 ## デモ動画
 
-<!-- TODO: 提出前にデモ動画を撮影してリンクを差し替える（3分以内） -->
-[デモ動画を見る](https://example.com/demo)
+[デモ動画を見る](https://youtu.be/LEVj7zsKtDY)
 
 ## インストール
 

@@ -1,7 +1,15 @@
 {
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
   "name": "manga-editorial",
   "description": "漫画の企画メモを渡すだけで、AI編集者たちが自動で会議を開いて掲載判断まで出してくれる skill",
+  "owner": {
+    "name": "KIRIKO-HirokiSato"
+  },
   "plugins": [
-    "manga-editorial-meeting"
+    {
+      "name": "manga-editorial-meeting",
+      "description": "漫画企画メモからAI編集者チームが自動で編集会議を開催。4軸スコア評価・掲載判断・編集長の問いを出力する",
+      "source": "./plugins/manga-editorial-meeting"
+    }
   ]
 }
